@@ -1,0 +1,30 @@
+<script>
+  window.addEventListener("DOMContentLoaded", (event) => {
+    document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      fetch("/api/user/obtain_token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        }),
+      }).then(function (r) {
+        r.json().then(function (res) {
+          document.querySelector("main").innerHTML =
+            "<div>Logged in! Auth token: " + res.token + "</div>";
+        });
+      });
+    });
+  });
+</script>
+
+<main>
+  <form id="form">
+    <input id="username" placeholder="username" />
+    <input id="password" placeholder="password" />
+    <button type="submit">Login</button>
+  </form>
+</main>
